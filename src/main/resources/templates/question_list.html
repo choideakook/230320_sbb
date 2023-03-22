@@ -4,25 +4,37 @@
         <thead class="table-dark">
         <tr>
             <th>번호</th>
-            <th>제목</th>
+            <th style="width:50%">제목</th>
+            <th>글쓴이</th>
             <th>작성일시</th>
         </tr>
         </thead>
         <tbody>
-        <tr th:each="question, loop : ${paging}">
+<!--        question list 시작 -->
+        <tr class="text-center" th:each="question, loop : ${paging}">
+<!--            question 고유 번호 시작-->
             <td th:text="${paging.getTotalElements - (paging.number * paging.size) - loop.index}"></td>
-            <td>
+<!--            question 고유 번호 종료-->
+<!--            question 제목 시작-->
+            <td class="text-start">
                 <a th:href="@{|/question/detail/${question.id}|}" th:text="${question.subject}"></a>
 <!--                게시물의 댓글 개수 표시 시작-->
                 <span class="danger small ms-2"
                       th:if="${#lists.size(question.answerList)} > 0"
                       th:text="${#lists.size(question.answerList)}">
-
                 </span>
 <!--                게시물의 댓글 개수 표시 종료-->
             </td>
+<!--            question 제목 종료-->
+<!--            글쓴이 표시 시작-->
+            <td>
+                <span th:if="${question.author != null}"
+                      th:text="${question.author.username}"></span>
+            </td>
+<!--            글쓴이 표시 종료-->
             <td th:text="${#temporals.format(question.createDate, 'yyyy-MM-dd HH:mm')}"></td>
         </tr>
+<!--        question list 종료 -->
         </tbody>
     </table>
 <!--    페이징 처리 시작 -->
