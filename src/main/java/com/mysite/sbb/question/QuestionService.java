@@ -51,4 +51,17 @@ public class QuestionService {
         this.questionRepository.save(q);
     }
 
+    //-- question 수정 --//
+    public void modify(Question question, String subject, String content) {
+        question.setSubject(subject);
+        question.setContent(content);
+        question.setModifyDate(LocalDateTime.now());
+        questionRepository.save(question);
+    }
+
+    //-- question 삭제 --//
+    public void delete(Question question) {
+        questionRepository.delete(question);
+    }
+
 }

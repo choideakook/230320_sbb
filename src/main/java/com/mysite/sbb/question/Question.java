@@ -30,6 +30,8 @@ public class Question {
 
     private LocalDateTime createDate;
 
+    private LocalDateTime modifyDate;
+
     @OneToMany(mappedBy = "question", cascade = REMOVE)
     private List<Answer> answerList;
 
