@@ -130,4 +130,18 @@ public class QuestionController {
         questionService.delete(question);
         return "redirect:/";
     }
+
+    //-- 좋아요 추가기능 --//
+    @GetMapping("vote/{id}")
+    @PreAuthorize("isAuthenticated()")
+    public String questionVote(
+            @PathVariable Integer id,
+            Principal principal
+    ) {
+        Question question = questionService.getQuestion(id);
+        SiteUser user = userService.getUser(principal.getName());
+
+        questionService.vote(question, user);
+        return "redirect:/question/detail/" + id;
+    }
 }

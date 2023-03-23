@@ -64,4 +64,22 @@ public class QuestionService {
         questionRepository.delete(question);
     }
 
+    //-- 좋아요 추가 --//
+    public void vote(Question question, SiteUser siteUser) {
+        // voter 에 user 를 추가
+        // voter 는 중복을 막기위해 타입이 Set 으로 구현 되어있다.
+        question.getVoter().add(siteUser);
+
+        questionRepository.save(question);
+    }
+
+    //-- 좋아요 취소 --//
+    public void cancel(Question question, SiteUser siteUser) {
+        question.getVoter().remove(siteUser);
+
+        questionRepository.save(question);
+    }
+
+
+
 }

@@ -47,4 +47,16 @@ public class AnswerService {
     public void delete(Answer answer) {
         answerRepository.delete(answer);
     }
+
+    //-- 좋아요 추가 --//
+    public void vote(Answer answer, SiteUser user) {
+        answer.getVoter().add(user);
+        answerRepository.save(answer);
+    }
+
+    //-- 좋아요 취소 --//
+    public void cancel(Answer answer, SiteUser user) {
+        answer.getVoter().remove(user);
+        answerRepository.save(answer);
+    }
 }

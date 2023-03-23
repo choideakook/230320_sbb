@@ -103,4 +103,18 @@ public class AnswerController {
         answerService.delete(answer);
         return "redirect:/question/detail/" + answer.getQuestion().getId();
     }
+
+    //-- 좋아요 추가 --//
+    @GetMapping("/vote/{id}")
+    @PreAuthorize("isAuthenticated()")
+    public String answerVote(
+            @PathVariable Integer id,
+            Principal principal
+    ) {
+        Answer answer = answerService.getAnswer(id);
+        SiteUser user = userService.getUser(principal.getName());
+
+        answerService.vote(answer, user);
+        return "redirect:/question/detail/" + answer.getQuestion().getId();
+    }
 }
