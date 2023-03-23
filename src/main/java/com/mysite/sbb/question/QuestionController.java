@@ -28,11 +28,13 @@ public class QuestionController {
     @GetMapping("/list")
     public String list(
             @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "") String kw,
             Model model
     ) {
-        Page<Question> paging = this.questionService.getList(page);
+        Page<Question> paging = this.questionService.getList(page, kw);
 
         model.addAttribute("paging", paging);
+        model.addAttribute("kw", kw);
         return "question_list";
     }
 
