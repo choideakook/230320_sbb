@@ -41,12 +41,14 @@ public class AnswerController {
         // 현재 로그인한 사용장의 username 을 조회해 SiteUser 를 찾는 로직
         SiteUser siteUser = this.userService.getUser(principal.getName());
 
+
         if (bindingResult.hasErrors()) {
             model.addAttribute("question", question);
             return "question_detail";
         }
-        this.answerService.create(question, answerForm.getContent(), siteUser);
-        return String.format("redirect:/question/detail/%s", id);
+        Answer answer = answerService.create(question, answerForm.getContent(), siteUser);
+        return String.format("redirect:/question/detail/%s#answer_%s"
+                , id, answer.getId());
     }
 
     //-- 답변 수정 폼 --//
@@ -84,7 +86,8 @@ public class AnswerController {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "수정 권한이 없습니다.");
 
         answerService.modify(answer, answerForm.getContent());
-        return "redirect:/question/detail/" + answer.getQuestion().getId();
+        return String.format("redirect:/question/detail/%s#answer_%s",
+                answer.getQuestion().getId(), answer.getId());
     }
 
     //-- answer 삭제 --//
@@ -115,6 +118,7 @@ public class AnswerController {
         SiteUser user = userService.getUser(principal.getName());
 
         answerService.vote(answer, user);
-        return "redirect:/question/detail/" + answer.getQuestion().getId();
+        return String.format("redirect:/question/detail/%s#answer_%s"
+        , answer.getQuestion().getId(), answer.getId());
     }
 }
