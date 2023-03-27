@@ -32,10 +32,11 @@
           method="post" class="my-3"
           th:object="${answerForm}">
 
+<!--        검증 템플릿 호출 시작 -->
+        <div th:replace="~{form_errors :: formErrorsFragment}"></div>
+<!--        검증 템플릿 호출 종료 -->
 
-
-        <textarea name="content"
-                  id="content"
+        <textarea th:field="*{content}"
                   rows="10"
                   class="form-control"></textarea>
         <input type="submit"

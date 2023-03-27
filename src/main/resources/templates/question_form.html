@@ -6,14 +6,9 @@
         th:object="${questionForm}"
         th:action="@{/question/create}">
 
-<!--    검증 시작 -->
-    <div class="alert alert-danger"
-         role="alert"
-         th:if="${#fields.hasAnyErrors()}">
-      <div th:each="err : ${#fields.allErrors()}"
-           th:text="${err}" />
-    </div>
-<!--    검증 종료 -->
+<!--      오류 템플릿 호출 시작-->
+      <div th:replace="~{form_errors ::  formErrorsFragment}"></div>
+<!--      오류 템플릿 호출 종료-->
 
 <!--    인풋 시작 -->
     <div class="mb-3">
