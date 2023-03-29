@@ -92,12 +92,12 @@ class SbbApplicationTests {
         assertThat(oq.isPresent()).isTrue();
         Question q = oq.get();
 
-        Answer a = new Answer();
-        a.setContent("네 자동으로 생성됩니다.");
-        a.setQuestion(q);
-
-        a.setCreateDate(LocalDateTime.now());
-        this.answerRepository.save(a);
+//        Answer a = new Answer();
+//        a.setContent("네 자동으로 생성됩니다.");
+//        a.setQuestion(q);
+//
+//        a.setCreateDate(LocalDateTime.now());
+//        this.answerRepository.save(a);
     }
 
     @Test

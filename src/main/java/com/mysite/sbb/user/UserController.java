@@ -1,15 +1,16 @@
 package com.mysite.sbb.user;
 
+import com.mysite.sbb.question.Question;
+import com.mysite.sbb.question.QuestionService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.data.domain.Page;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 
@@ -19,6 +20,7 @@ import java.security.Principal;
 public class UserController {
 
     private final UserService userService;
+    private final QuestionService questionService;
 
     //-- 가입 폼 --//
     @GetMapping("/signup")
@@ -82,25 +84,16 @@ public class UserController {
     @GetMapping("/profile")
     @PreAuthorize("isAuthenticated()")
     public String profile(
+            @RequestParam(defaultValue = "0") int page,
             Principal principal,
             Model model
     ) {
         SiteUser user = userService.getUser(principal.getName());
+        Page<Question> paging = questionService.findByAuthor(user, page);
+
+        model.addAttribute("paging", paging);
         model.addAttribute("user", user);
         return "user_profile";
-    }
-
-    //-- modify 폼 --//
-    @GetMapping("/modify")
-    @PreAuthorize("isAuthenticated()")
-    public String modifyUser(
-            UserModifyForm userModifyFrom,
-            Principal principal
-    ) {
-        SiteUser user = userService.getUser(principal.getName());
-        userModifyFrom.setUsername(user.getUsername());
-        userModifyFrom.setEmail(user.getEmail());
-        return "user_form";
     }
 
     //-- modify 처리 --//
@@ -116,7 +109,6 @@ public class UserController {
 
         SiteUser user = userService.getUser(principal.getName());
         userService.modify(user, userModifyForm.getUsername(), userModifyForm.getEmail());
-
 
         return "redirect:/user/logout";
     }

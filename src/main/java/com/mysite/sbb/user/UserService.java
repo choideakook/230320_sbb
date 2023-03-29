@@ -17,13 +17,9 @@ public class UserService {
 
     //-- create --//
     public SiteUser create(String username, String email, String password) {
-        SiteUser user = new SiteUser();
-        user.setUsername(username);
-        user.setEmail(email);
-
-        user.setPassword(passwordEncoder.encode(password));
-
-        repository.save((user));
+        String pw = passwordEncoder.encode(password);
+        SiteUser user = SiteUser.createUser(username, email, pw);
+        repository.save(user);
         return user;
     }
 
@@ -40,8 +36,7 @@ public class UserService {
 
     //-- Modify --//
     public void modify(SiteUser user, String username, String email) {
-        user.setUsername(username);
-        user.setEmail(email);
+        user.modifyUser(username, email);
         repository.save(user);
     }
 

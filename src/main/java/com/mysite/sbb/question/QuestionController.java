@@ -32,13 +32,6 @@ public class QuestionController {
             Principal principal,
             Model model
     ) {
-        try {
-            SiteUser user = userService.getUser(principal.getName());
-            model.addAttribute("user", user);
-        } catch (NullPointerException e) {
-        }
-
-
         Page<Question> paging = questionService.getList(page);
         model.addAttribute("paging", paging);
         return "question_list";
@@ -52,6 +45,8 @@ public class QuestionController {
             Model model
     ) {
         Question question = questionService.getQuestion(id);
+        questionService.addViewCount(question);
+
         model.addAttribute("question", question);
         return "question_detail";
     }

@@ -16,13 +16,10 @@ public class AnswerService {
     private final AnswerRepository repository;
 
     //-- create --//
-    public void create(Question question, String content, SiteUser author) {
-        Answer answer = new Answer();
-        answer.setContent(content);
-        answer.setCreateDate(LocalDateTime.now());
-        answer.setQuestion(question);
-        answer.setAuthor(author);
-        repository.save(answer);
+    public Integer create(Question question, String content, SiteUser author) {
+        Answer answer = Answer.createAnswer(question, author, content);
+        Answer saveAnswer = repository.save(answer);
+        return saveAnswer.getId();
     }
 
     //-- find by id --//
@@ -37,8 +34,7 @@ public class AnswerService {
 
     //-- modify --//
     public void modify(Answer answer, String content) {
-        answer.setContent(content);
-        answer.setModifyDate(LocalDateTime.now());
+        answer.modifyAnswer(content);
         repository.save(answer);
     }
 

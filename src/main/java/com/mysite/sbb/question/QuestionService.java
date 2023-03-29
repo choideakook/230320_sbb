@@ -8,7 +8,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -44,26 +43,41 @@ public class QuestionService {
             throw new DataNotFoundException("question not found");
     }
 
+    //-- find by author + paging --//
+    public Page<Question> findByAuthor(SiteUser author, int page) {
+        List<Sort.Order> sorts = new ArrayList<>();
+        sorts.add(Sort.Order.desc("createDate"));
+
+        PageRequest pageable = PageRequest.of(page, 10, Sort.by(sorts));
+        return repository.findByAuthor(author, pageable);
+    }
+
     //-- create --//
     public void create(String subject, String content, SiteUser siteUser) {
-        Question q = new Question();
-        q.setSubject(subject);
-        q.setContent(content);
-        q.setCreateDate(LocalDateTime.now());
-        q.setAuthor(siteUser);
-        repository.save(q);
+        Question question = Question.createQuestion(subject, content, siteUser);
+        repository.save(question);
     }
 
     //-- update --//
     public void modify(Question question, String subject, String content) {
-        question.setSubject(subject);
-        question.setContent(content);
-        question.setModifyDate(LocalDateTime.now());
+        question.modifyQuestion(content, subject);
         repository.save(question);
     }
 
     //-- delete --//
     public void delete(Question question) {
         repository.delete(question);
+    }
+
+    //-- add view count --//
+    public void addViewCount(Question question) {
+        try {
+            question.viewCounter();
+        } catch (NullPointerException e) {
+            question.viewCreate();
+        }
+
+
+        repository.save(question);
     }
 }

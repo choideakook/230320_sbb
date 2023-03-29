@@ -6,7 +6,6 @@ import com.mysite.sbb.user.SiteUser;
 import com.mysite.sbb.user.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.expression.spel.SpelEvaluationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -45,8 +44,9 @@ public class AnswerController {
             return "question_detail";
         }
 
-        answerService.create(question, answerForm.getContent(), user);
-        return String.format("redirect:/question/detail/%s", id);
+        Integer answerId = answerService.create(question, answerForm.getContent(), user);
+        return String.format("redirect:/question/detail/%s#answer_%s",
+                id, answerId);
     }
 
     //-- 답변 수정 폼 --//
