@@ -1,0 +1,35 @@
+<html layout:decorate="~{layout}" xmlns:layout="http://www.w3.org/1999/xhtml">
+<div layout:fragment="content" class="container my-3">
+  <div class="my-3 border-bottom">
+    <div>
+      <h4>회원 가입</h4>
+    </div>
+  </div>
+  <!--    가입 form 시작-->
+  <form th:action="@{/user/signup}" th:object="${userCreateForm}" method="post">
+    <!--        form_errors 를 호출해 양식에 맞게 작성되었는지 검증-->
+    <div th:replace="~{form_errors :: formErrorsFragment}"></div>
+    <!--        클라이언트 입력 공간 시작-->
+    <div class="mb-3">
+      <label for="username" class="form-label">사용자 ID</label>
+      <input type="text" th:field="*{username}" class="form-control">
+    </div>
+    <div class="mb-3">
+      <label for="password1" class="form-label">비밀번호</label>
+      <input type="password" th:field="*{password1}" class="form-control">
+    </div>
+    <div class="mb-3">
+      <label for="password2" class="form-label">비밀번호 확인</label>
+      <input type="password" th:field="*{password2}" class="form-control">
+    </div>
+    <div class="mb-3">
+      <label for="email" class="form-label">이메일</label>
+      <input type="email" th:field="*{email}" class="form-control">
+    </div>
+    <!--        클라이언트 입력 공간 끝-->
+    <!--        제출 버튼-->
+    <button type="submit" class="btn btn-primary">회원 가입</button>
+  </form>
+  <!--    가입 form 종료-->
+</div>
+</html>

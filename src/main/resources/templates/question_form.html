@@ -3,8 +3,11 @@
   <h5 class="my-3 border-bottom pb-2">질문등록</h5>
 
   <form method="post"
-        th:object="${questionForm}"
-        th:action="@{/question/create}">
+        th:object="${questionForm}">
+
+      <input type="hidden"
+             th:name="${_csrf.parameterName}"
+             th:value="${_csrf.token}"/>
 
 <!--      오류 템플릿 호출 시작-->
       <div th:replace="~{form_errors ::  formErrorsFragment}"></div>

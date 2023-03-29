@@ -1,0 +1,21 @@
+<html layout:decorate="~{layout}" xmlns:layout="http://www.w3.org/1999/xhtml">
+<div layout:fragment="content" class="container my-3">
+
+  <h4 class="my-3 border-bottom pb-2"
+      th:text="|${user.username} 님의 프로필 수정|"></h4>
+
+
+  <div class="mb-3">
+    <label for="username" class="form-label">사용자 ID</label>
+    <input type="text" th:field="${user.username}" class="form-control" disabled>
+  </div>
+
+  <div class="mb-3">
+    <label for="email" class="form-label">이메일</label>
+    <input type="email" th:field="${user.email}" class="form-control" disabled>
+  </div>
+
+  <a th:href="@{/user/modify}" class="btn btn-primary">프로필 수정하기</a>
+
+</div>
+</html>

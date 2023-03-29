@@ -1,6 +1,5 @@
 package com.mysite.sbb.question;
 
-import com.mysite.sbb.question.Question;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
@@ -15,7 +14,9 @@ public interface QuestionRepository extends JpaRepository<Question, Integer> {
 
     List<Question> findBySubjectLike(String subject);
 
+    //-- paging V1 --//
     Page<Question> findAll(Pageable pageable);
 
+    //-- paging V2 --//
     Page<Question> findAll(Specification<Question> spec, Pageable pageable);
 }

@@ -11,8 +11,18 @@
   <title>Hello, sbb!</title>
 </head>
 <body>
+
+<!-- 네비바 시작 -->
+<nav th:replace="~{navbar :: navbarFragment}"></nav>
+<!-- 네비바 종료 -->
+
 <!-- 기본 템플릿 안에 삽입될 내용 Start -->
 <th:block layout:fragment="content"></th:block>
 <!-- 기본 템플릿 안에 삽입될 내용 End -->
+
+<!-- Bootstrap JS 시작-->
+<script th:src="@{/bootstrap.min.js}"></script>
+<!-- Bootstrap JS 종료-->
+
 </body>
 </html>
