@@ -36,6 +36,8 @@ dependencies {
 	runtimeOnly 'com.mysql:mysql-connector-j'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation "org.assertj:assertj-core:3.20.2"
+	implementation 'com.github.ulisesbocchio:jasypt-spring-boot-starter:3.0.4' // jasypt
+
 
 }
 
